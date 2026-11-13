@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHRAQ | Projects</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #080808;
+            color: #eeeeee;
+        }
+
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            position: fixed;
+            background: #111;
+            padding: 30px 20px;
+            border-right: 1px solid #b00020;
+        }
+
+        .logo {
+            color: #dc143c;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 12px #dc143c;
+        }
+
+        .tagline {
+            text-align: center;
+            color: silver;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-bottom: 45px;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: silver;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #35000b;
+            color: #ff1744;
+            border-left: 3px solid crimson;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+        }
+
+        .header span {
+            color: crimson;
+        }
+
+        .back {
+            color: silver;
+            text-decoration: none;
+        }
+
+        .intro {
+            margin-bottom: 30px;
+            color: #aaa;
+            line-height: 1.7;
+        }
+
+        .form-box {
+            background: #151515;
+            border: 1px solid #660015;
+            padding: 28px;
+            border-radius: 10px;
+            margin-bottom: 35px;
+        }
+
+        .form-box h2 {
+            color: crimson;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            color: silver;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 13px;
+            background: #080808;
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: white;
+            outline: none;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: crimson;
+        }
+
+        button {
+            margin-top: 22px;
+            padding: 13px 25px;
+            background: #b00020;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #e00030;
+            box-shadow: 0 0 12px crimson;
+        }
+
+        .project-list h2 {
+            margin-bottom: 20px;
+        }
+
+        .project-card {
+            background: #151515;
+            border: 1px solid #444;
+            border-left: 4px solid crimson;
+            padding: 22px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .project-card h3 {
+            color: crimson;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            color: silver;
+            font-size: 13px;
+        }
+
+        .empty {
+            color: #888;
+            padding: 20px;
+            background: #151515;
+            border-radius: 7px;
+        }
+
+        .errorlist {
+            color: #ff526f;
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+
+        @media(max-width: 750px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <div class="logo">SHRAQ</div>
+        <div class="tagline">QUALITY ASSURANCE</div>
+
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'projects' %}" class="active">Projects</a>
+        <a href="#">Bug Tracking</a>
+        <a href="#">Test Cases</a>
+        <a href="#">Tasks</a>
+        <a href="#">Reports</a>
+
+    </div>
+
+    <div class="main">
+
+        <div class="header">
+            <h1>Project <span>Management</span></h1>
+            <a href="{% url 'dashboard' %}" class="back">← Dashboard</a>
+        </div>
+
+        <p class="intro">
+            Create and manage your software testing projects.
+            Keep your QA activities organized in one workspace.
+        </p>
+
+        <div class="form-box">
+
+            <h2>+ Create New Project</h2>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+
+                <label>Project Name</label>
+                {{ form.name }}
+                {{ form.name.errors }}
+
+                <label>Project Description</label>
+                {{ form.description }}
+                {{ form.description.errors }}
+
+                <label>Project Status</label>
+                {{ form.status }}
+                {{ form.status.errors }}
+
+                <button type="submit">Save Project</button>
+
+            </form>
+
+        </div>
+
+        <div class="project-list">
+
+            <h2>Your Projects</h2>
+
+            {% for project in projects %}
+
+                <div class="project-card">
+
+                    <h3>{{ project.name }}</h3>
+
+                    <p>
+                        {{ project.description|default:"No description provided." }}
+                    </p>
+
+                    <div class="status">
+                        Status: {{ project.status }}
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty">
+                    No projects created yet. Create your first project above!
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

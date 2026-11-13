@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHRAQ | Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #050505;
+            font-family: Arial, sans-serif;
+            color: #e5e5e5;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 420px;
+            max-width: 100%;
+            padding: 45px 40px;
+            background: #111111;
+            border: 1px solid #777777;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(220, 0, 35, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 46px;
+            font-weight: bold;
+            letter-spacing: 7px;
+            color: #e0002b;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(224, 0, 43, 0.4);
+        }
+
+        .tagline {
+            text-align: center;
+            color: #c0c0c0;
+            font-size: 11px;
+            letter-spacing: 3px;
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #eeeeee;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            color: #c0c0c0;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            background: #080808;
+            border: 1px solid #555555;
+            border-radius: 7px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #e0002b;
+            box-shadow: 0 0 10px rgba(224, 0, 43, 0.35);
+        }
+
+        .errorlist {
+            color: #ff3355;
+            font-size: 12px;
+            margin: 8px 0;
+            list-style: none;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 12px;
+            background: #d9002b;
+            color: #ffffff;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            background: #ff0038;
+            box-shadow: 0 0 18px rgba(255, 0, 56, 0.5);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 27px;
+            color: #bdbdbd;
+            font-size: 14px;
+        }
+
+        a {
+            color: #e0002b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #ffffff;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            color: #999999;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 35px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="logo">SHRAQ</div>
+
+        <div class="tagline">
+            SMART TESTING. STRONG RESULTS.
+        </div>
+
+        <h2>Welcome Back</h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">
+                    Username
+                </label>
+
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">
+                    Password
+                </label>
+
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+
+            <button type="submit" class="login-button">
+                LOGIN
+            </button>
+
+        </form>
+
+        <div class="register-link">
+            Don't have an account?
+            <a href="{% url 'register' %}">Create Account</a>
+        </div>
+
+        <div class="footer">
+            © SHRAQ | QUALITY ASSURANCE
+        </div>
+
+    </div>
+
+</body>
+</html>

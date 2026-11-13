@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHRAQ | Register</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #050505;
+            font-family: Arial, sans-serif;
+            color: #e5e5e5;
+            padding: 25px;
+        }
+
+        .register-container {
+            width: 430px;
+            max-width: 100%;
+            padding: 40px;
+            background: #111111;
+            border: 1px solid #777777;
+            border-radius: 14px;
+            box-shadow: 0 0 30px rgba(220, 0, 35, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 44px;
+            font-weight: bold;
+            letter-spacing: 6px;
+            color: #e0002b;
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            text-align: center;
+            color: #bdbdbd;
+            font-size: 11px;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #eeeeee;
+            margin-bottom: 28px;
+            font-size: 23px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c0c0c0;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            background: #080808;
+            border: 1px solid #555555;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #e0002b;
+            box-shadow: 0 0 8px rgba(224, 0, 43, 0.4);
+        }
+
+        .helptext {
+            display: block;
+            color: #999999;
+            font-size: 11px;
+            margin-top: 7px;
+            line-height: 1.5;
+        }
+
+        ul {
+            color: #999999;
+            font-size: 11px;
+            margin: 7px 0 0 18px;
+            line-height: 1.6;
+        }
+
+        .errorlist {
+            color: #ff3355;
+            font-size: 12px;
+            margin: 7px 0;
+            line-height: 1.5;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #d9002b;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #ff0038;
+            box-shadow: 0 0 18px rgba(255, 0, 56, 0.5);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 23px;
+            color: #bdbdbd;
+            font-size: 14px;
+        }
+
+        a {
+            color: #e0002b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #ffffff;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 28px;
+            color: #777777;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 28px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-container">
+
+        <div class="logo">SHRAQ</div>
+
+        <div class="tagline">
+            SMART TESTING. STRONG RESULTS.
+        </div>
+
+        <h2>Create Your Account</h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            <div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+                {{ form.username.help_text }}
+            </div>
+
+            <div>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div>
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+                {{ form.password1.help_text }}
+            </div>
+
+            <div>
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+                {{ form.password2.help_text }}
+            </div>
+
+            <button type="submit">
+                CREATE ACCOUNT
+            </button>
+
+        </form>
+
+        <div class="login-link">
+            Already have an account?
+            <a href="{% url 'login' %}">Login here</a>
+        </div>
+
+        <div class="footer">
+            © SHRAQ | QUALITY ASSURANCE
+        </div>
+
+    </div>
+
+</body>
+</html>

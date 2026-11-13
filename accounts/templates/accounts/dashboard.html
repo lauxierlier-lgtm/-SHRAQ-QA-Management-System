@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHRAQ | Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #080808;
+            color: #eeeeee;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, #151515, #090909);
+            border-right: 1px solid #681020;
+            padding: 35px 20px;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 37px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-align: center;
+            color: #dc143c;
+            text-shadow: 0 0 18px #dc143c;
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: #999999;
+            margin-top: 8px;
+            margin-bottom: 55px;
+        }
+
+        .menu-label {
+            color: #777777;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin: 0 0 18px 12px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 15px;
+            margin-bottom: 9px;
+            color: #aaaaaa;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: linear-gradient(90deg, #35000c, #180008);
+            color: #ffffff;
+            border-left: 3px solid #dc143c;
+            box-shadow: 0 0 15px #28000a;
+        }
+
+        .menu-icon {
+            color: #dc143c;
+            font-size: 17px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            padding: 15px;
+            border: 1px solid #383838;
+            border-radius: 8px;
+            text-align: center;
+            color: #888888;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* MAIN CONTENT */
+
+        .main {
+            margin-left: 260px;
+            padding: 35px 45px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .breadcrumb {
+            color: #888888;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .breadcrumb span {
+            color: #dc143c;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #dc143c, #650015);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border: 1px solid #ff3158;
+        }
+
+        .user-name {
+            font-size: 13px;
+            color: #cccccc;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: #ff4968;
+            border: 1px solid #791329;
+            padding: 9px 17px;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .logout:hover {
+            background: #b00020;
+            color: white;
+            box-shadow: 0 0 15px #b00020;
+        }
+
+        /* WELCOME BANNER */
+
+        .welcome {
+            position: relative;
+            overflow: hidden;
+            padding: 48px;
+            border-radius: 15px;
+            background:
+                radial-gradient(circle at 90% 20%, #4b0014 0%, transparent 40%),
+                linear-gradient(120deg, #1b0509, #101010 70%);
+            border: 1px solid #651327;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 40px rgba(120, 0, 25, 0.12);
+        }
+
+        .welcome::after {
+            content: "SHRAQ";
+            position: absolute;
+            right: 35px;
+            top: 20px;
+            font-size: 85px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: rgba(220, 20, 60, 0.06);
+        }
+
+        .welcome-tag {
+            color: #ff4968;
+            font-size: 11px;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+
+        .welcome h1 {
+            font-size: 35px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome h1 span {
+            color: #dc143c;
+        }
+
+        .welcome p {
+            color: #aaaaaa;
+            max-width: 650px;
+            line-height: 1.9;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 23px;
+            background: #b00020;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-button:hover {
+            background: #e00035;
+            box-shadow: 0 0 20px #b00020;
+        }
+
+        /* SECTION */
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-size: 21px;
+            font-weight: 600;
+        }
+
+        .section-heading p {
+            color: #777777;
+            font-size: 12px;
+        }
+
+        /* WORKSPACE CARDS */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            position: relative;
+            background: linear-gradient(145deg, #181818, #101010);
+            border: 1px solid #393939;
+            border-radius: 12px;
+            padding: 27px;
+            min-height: 185px;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #dc143c;
+            box-shadow: 0 12px 30px rgba(180, 0, 35, 0.13);
+        }
+
+        .card-number {
+            color: #777777;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 19px;
+            margin-bottom: 12px;
+            color: #eeeeee;
+        }
+
+        .card p {
+            color: #999999;
+            font-size: 13px;
+            line-height: 1.8;
+            max-width: 350px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 22px;
+        }
+
+        .status {
+            color: #cccccc;
+            font-size: 10px;
+            letter-spacing: 1px;
+            border: 1px solid #555555;
+            padding: 6px 11px;
+            border-radius: 20px;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: #ff4968;
+            font-size: 12px;
+        }
+
+        .card-link:hover {
+            color: white;
+        }
+
+        .card-accent {
+            position: absolute;
+            right: -25px;
+            bottom: -45px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(180, 0, 35, 0.07);
+            filter: blur(5px);
+        }
+
+        /* FOOTER */
+
+        .footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            border-top: 1px solid #292929;
+            color: #666666;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer span {
+            color: #dc143c;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+            .main {
+                padding: 25px;
+            }
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .main {
+                margin-left: 220px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .sidebar-bottom {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome {
+                padding: 30px;
+            }
+
+            .welcome h1 {
+                font-size: 26px;
+            }
+
+            .topbar {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .welcome::after {
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">SHRAQ</div>
+        <div class="tagline">QUALITY ASSURANCE</div>
+
+        <div class="menu-label">WORKSPACE</div>
+
+        <nav class="menu">
+
+            <a href="{% url 'dashboard' %}" class="active">
+                <span class="menu-icon">◆</span>
+                Dashboard
+            </a>
+
+            <a href="{% url 'projects' %}">
+                <span class="menu-icon">▣</span>
+                Projects
+            </a>
+
+            <a href="{% url 'bugs' %}">
+    <span class="menu-icon">◈</span>
+    Bug Tracking
+</a>
+
+           <a href="{% url 'testcases' %}">
+    <span class="menu-icon">✓</span>
+    Test Cases
+</a>
+
+            <a href="#">
+                <span class="menu-icon">◷</span>
+                Tasks
+            </a>
+
+            <a href="#">
+                <span class="menu-icon">▥</span>
+                Reports
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            SHRAQ SYSTEM · 2026
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                WORKSPACE <span>/</span> DASHBOARD
+            </div>
+
+            <div class="user-area">
+
+                <div class="user-avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+                <div class="user-name">
+                    {{ request.user.username }}
+                </div>
+
+                <a href="{% url 'logout' %}" class="logout">
+                    Logout
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+            <div class="welcome-tag">
+                YOUR QUALITY ASSURANCE SPACE
+            </div>
+
+            <h1>
+                Welcome back,
+                <span>{{ request.user.username }}</span>
+            </h1>
+
+            <p>
+                Every detail matters. Every test counts.
+                Manage your testing projects, identify defects,
+                organize test cases and monitor quality progress
+                through one unified workspace.
+            </p>
+
+            <a href="{% url 'projects' %}" class="welcome-button">
+                Explore Projects →
+            </a>
+
+        </section>
+
+
+        <!-- WORKSPACE -->
+
+        <div class="section-heading">
+
+            <h2>Workspace Modules</h2>
+
+            <p>YOUR TESTING ENVIRONMENT</p>
+
+        </div>
+
+
+        <section class="cards">
+
+            <div class="card">
+
+                <div class="card-accent"></div>
+
+                <div class="card-number">MODULE 01</div>
+
+                <h3>Project Management</h3>
+
+                <p>
+                    Create testing projects, organize project
+                    information and monitor project status.
+                </p>
+
+                <div class="card-footer">
+
+                    <span class="status">AVAILABLE</span>
+
+                    <a href="{% url 'projects' %}" class="card-link">
+                        Open Module →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-accent"></div>
+
+                <div class="card-number">MODULE 02</div>
+
+                <h3>Bug Tracking</h3>
+
+                <p>
+                    Record software defects, identify their
+                    severity and monitor their resolution.
+                </p>
+
+                <div class="card-footer">
+                    <span class="status">IN DEVELOPMENT</span>
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-accent"></div>
+
+                <div class="card-number">MODULE 03</div>
+
+                <h3>Test Case Management</h3>
+
+                <p>
+                    Design test cases, organize test scenarios
+                    and maintain structured testing records.
+                </p>
+
+                <div class="card-footer">
+                    <span class="status">IN DEVELOPMENT</span>
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-accent"></div>
+
+                <div class="card-number">MODULE 04</div>
+
+                <h3>Task Management</h3>
+
+                <p>
+                    Organize testing activities, manage
+                    assignments and monitor task progress.
+                </p>
+
+                <div class="card-footer">
+                    <span class="status">IN DEVELOPMENT</span>
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-accent"></div>
+
+                <div class="card-number">MODULE 05</div>
+
+                <h3>Reports & Analytics</h3>
+
+                <p>
+                    Review project information and analyze
+                    testing progress through reports.
+                </p>
+
+                <div class="card-footer">
+                    <span class="status">IN DEVELOPMENT</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer class="footer">
+
+            <div>© 2026 SHRAQ. All rights reserved.</div>
+
+            <div>BUILT FOR <span>QUALITY</span>.</div>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>

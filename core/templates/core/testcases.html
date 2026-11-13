@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHRAQ | Test Case Management</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #080808;
+    color: #eeeeee;
+    font-family: Arial, sans-serif;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 245px;
+    background: #111111;
+    border-right: 1px solid #333;
+    padding: 30px 20px;
+}
+
+.logo {
+    color: #dc143c;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-bottom: 45px;
+}
+
+.sidebar h4 {
+    color: #888;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+}
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #bbb;
+    padding: 14px;
+    margin-bottom: 8px;
+    border-radius: 7px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #dc143c;
+    color: white;
+}
+
+.main {
+    flex: 1;
+    padding: 40px;
+    min-width: 0;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.topbar h1 {
+    font-size: 27px;
+}
+
+.topbar span {
+    color: #dc143c;
+}
+
+.back-btn {
+    color: #ddd;
+    text-decoration: none;
+    border: 1px solid #555;
+    padding: 10px 17px;
+    border-radius: 6px;
+}
+
+.back-btn:hover {
+    border-color: #dc143c;
+    color: #dc143c;
+}
+
+.intro {
+    background: linear-gradient(120deg, #250009, #111);
+    border: 1px solid #6b1025;
+    padding: 28px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.intro h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    color: #aaa;
+    line-height: 1.6;
+}
+
+.section-title {
+    margin-bottom: 18px;
+    font-size: 20px;
+}
+
+.card {
+    background: #121212;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+form p {
+    margin-bottom: 18px;
+}
+
+form label {
+    display: block;
+    color: #ccc;
+    margin-bottom: 9px;
+    font-size: 14px;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    background: #080808;
+    color: white;
+    border: 1px solid #444;
+    padding: 13px;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #dc143c;
+    box-shadow: 0 0 8px #dc143c55;
+}
+
+form textarea {
+    resize: vertical;
+}
+
+.helptext {
+    display: block;
+    color: #888;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+form ul.errorlist {
+    color: #ff526e;
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.submit-btn {
+    background: #dc143c;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #a80025;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px #dc143c44;
+}
+
+.testcase {
+    background: #171717;
+    border: 1px solid #333;
+    border-left: 4px solid #dc143c;
+    padding: 22px;
+    border-radius: 9px;
+    margin-bottom: 16px;
+}
+
+.testcase h3 {
+    margin-bottom: 14px;
+}
+
+.testcase p {
+    color: #aaa;
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+
+.testcase strong {
+    color: #ddd;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid #999;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #ddd;
+    margin-top: 8px;
+}
+
+.empty {
+    text-align: center;
+    padding: 35px;
+    color: #888;
+    border: 1px dashed #555;
+    border-radius: 9px;
+}
+
+@media(max-width: 750px) {
+    .sidebar {
+        width: 180px;
+        padding: 20px 12px;
+    }
+
+    .main {
+        padding: 22px 15px;
+    }
+
+    .topbar {
+        flex-wrap: wrap;
+    }
+}
+
+@media(max-width: 500px) {
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">SHRAQ</div>
+
+        <h4>WORKSPACE</h4>
+
+        <a href="{% url 'dashboard' %}">◈ Dashboard</a>
+        <a href="{% url 'projects' %}">▣ Projects</a>
+        <a href="{% url 'bugs' %}">◉ Bug Tracking</a>
+        <a href="{% url 'testcases' %}" class="active">✓ Test Cases</a>
+
+        <br>
+
+        <h4>ACCOUNT</h4>
+        <a href="{% url 'logout' %}">⇥ Logout</a>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <h1>Test Case <span>Management</span></h1>
+            <a href="{% url 'dashboard' %}" class="back-btn">
+                ← Dashboard
+            </a>
+        </div>
+
+        <div class="intro">
+            <h2>Test. Validate. Deliver.</h2>
+            <p>
+                Create test cases, define expected results and record
+                actual testing outcomes. Keep your project testing
+                activities organized in one place.
+            </p>
+        </div>
+
+        <h2 class="section-title">Create New Test Case</h2>
+
+        <div class="card">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="submit-btn">
+                    + Create Test Case
+                </button>
+            </form>
+
+        </div>
+
+        <h2 class="section-title">Registered Test Cases</h2>
+
+        {% for testcase in testcases %}
+
+        <div class="testcase">
+
+            <h3>{{ testcase.title }}</h3>
+
+            <p>
+                <strong>Project:</strong>
+                {{ testcase.project.name }}
+            </p>
+
+            <p>
+                <strong>Test Steps:</strong><br>
+                {{ testcase.test_steps|linebreaksbr }}
+            </p>
+
+            <p>
+                <strong>Expected Result:</strong><br>
+                {{ testcase.expected_result|linebreaksbr }}
+            </p>
+
+            <p>
+                <strong>Actual Result:</strong><br>
+                {% if testcase.actual_result %}
+                    {{ testcase.actual_result|linebreaksbr }}
+                {% else %}
+                    Not recorded yet.
+                {% endif %}
+            </p>
+
+            <span class="badge">
+                Status: {{ testcase.status }}
+            </span>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty">
+            <h3>No Test Cases Yet</h3>
+            <p>Create your first test case using the form above.</p>
+        </div>
+
+        {% endfor %}
+
+    </main>
+
+</div>
+
+</body>
+</html>

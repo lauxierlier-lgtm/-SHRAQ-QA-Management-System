@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHRAQ | Bug Tracking</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #080808;
+            color: #eeeeee;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background: #111111;
+            border-right: 1px solid #850019;
+            padding: 35px 20px;
+        }
+
+        .logo {
+            color: #dc143c;
+            font-size: 35px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-align: center;
+            text-shadow: 0 0 15px #dc143c;
+        }
+
+        .tagline {
+            color: #999999;
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 3px;
+            margin: 10px 0 55px;
+        }
+
+        .menu-label {
+            color: #666666;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin: 0 0 18px 10px;
+        }
+
+        .menu a {
+            display: block;
+            color: #bbbbbb;
+            padding: 15px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            border-radius: 7px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #35000b;
+            color: #ff3158;
+            border-left: 3px solid #dc143c;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 35px 40px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .breadcrumb {
+            color: #999999;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .breadcrumb span {
+            color: #dc143c;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #dddddd;
+            border: 1px solid #555555;
+            padding: 10px 17px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            border-color: #dc143c;
+            color: #ff3158;
+        }
+
+        .heading {
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .heading h1 span {
+            color: #dc143c;
+        }
+
+        .heading p {
+            color: #999999;
+            font-size: 13px;
+        }
+
+        .form-container {
+            background: linear-gradient(145deg, #191919, #101010);
+            border: 1px solid #4b1721;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .form-container h2 {
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-container h2 span {
+            color: #dc143c;
+        }
+
+        .form-container form p {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #cccccc;
+            margin-bottom: 9px;
+            font-size: 13px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            background: #090909;
+            color: #eeeeee;
+            border: 1px solid #444444;
+            border-radius: 6px;
+            padding: 13px;
+            outline: none;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #dc143c;
+            box-shadow: 0 0 10px #35000b;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #dc143c, #850019);
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px #dc143c;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-size: 21px;
+        }
+
+        .section-heading span {
+            color: #999999;
+            font-size: 12px;
+        }
+
+        .bug-card {
+            background: #151515;
+            border: 1px solid #393939;
+            border-radius: 10px;
+            padding: 23px;
+            margin-bottom: 17px;
+            transition: 0.3s;
+        }
+
+        .bug-card:hover {
+            border-color: #dc143c;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px #180008;
+        }
+
+        .bug-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .bug-card h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .bug-card p {
+            color: #999999;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .bug-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border: 1px solid #555555;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #cccccc;
+        }
+
+        .severity {
+            color: #ff4968;
+            border-color: #850019;
+        }
+
+        .bug-date {
+            color: #777777;
+            font-size: 11px;
+            margin-top: 15px;
+        }
+
+        .empty {
+            padding: 35px;
+            text-align: center;
+            border: 1px dashed #555555;
+            border-radius: 10px;
+            color: #999999;
+            line-height: 2;
+        }
+
+        .footer {
+            margin-top: 45px;
+            border-top: 1px solid #333333;
+            padding: 20px 0;
+            text-align: center;
+            color: #666666;
+            font-size: 11px;
+        }
+
+        .errorlist {
+            color: #ff4968;
+            font-size: 12px;
+            margin: 8px 0;
+            list-style: none;
+        }
+
+        @media(max-width: 750px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .topbar {
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">SHRAQ</div>
+
+        <div class="tagline">QUALITY ASSURANCE</div>
+
+        <div class="menu-label">WORKSPACE</div>
+
+        <nav class="menu">
+
+            <a href="{% url 'dashboard' %}">◆ Dashboard</a>
+
+            <a href="{% url 'projects' %}">▣ Projects</a>
+
+            <a href="{% url 'bugs' %}" class="active">◈ Bug Tracking</a>
+
+            <a href="#">▤ Test Cases</a>
+
+            <a href="#">◷ Tasks</a>
+
+            <a href="#">▥ Reports</a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div class="breadcrumb">
+                WORKSPACE <span>/</span> BUG TRACKING
+            </div>
+
+            <a href="{% url 'dashboard' %}" class="back-btn">
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <div class="heading">
+
+            <h1>Bug <span>Tracking</span></h1>
+
+            <p>
+                Identify, report and monitor software defects.
+                Keep every issue organized.
+            </p>
+
+        </div>
+
+
+        <!-- BUG REGISTRATION FORM -->
+
+        <section class="form-container">
+
+            <h2><span>+</span> Report New Bug</h2>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="submit-btn">
+                    + Submit Bug Report
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- REPORTED BUGS -->
+
+        <div class="section-heading">
+
+            <h2>Reported Bugs</h2>
+
+            <span>{{ bugs|length }} RECORDS</span>
+
+        </div>
+
+
+        {% for bug in bugs %}
+
+        <div class="bug-card">
+
+            <div class="bug-top">
+
+                <h3>{{ bug.title }}</h3>
+
+                <span class="badge severity">
+                    {{ bug.severity }}
+                </span>
+
+            </div>
+
+            <p>{{ bug.description|linebreaksbr }}</p>
+
+            <div class="bug-details">
+
+                <span class="badge">
+                    Project: {{ bug.project.name }}
+                </span>
+
+                <span class="badge">
+                    Status: {{ bug.status }}
+                </span>
+
+                <span class="badge">
+                    Reported by: {{ bug.reported_by.username }}
+                </span>
+
+            </div>
+
+            <div class="bug-date">
+                Reported on: {{ bug.created_at|date:"d M Y, H:i" }}
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty">
+
+            <h3>No Bugs Reported Yet</h3>
+
+            <p>
+                Your bug records will appear here after
+                you submit your first bug report.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+
+        <footer class="footer">
+            © 2026 SHRAQ | QUALITY ASSURANCE MANAGEMENT SYSTEM
+        </footer>
+
+    </main>
+
+</body>
+</html>
